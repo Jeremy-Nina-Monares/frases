@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspírate - Frases Motivacionales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+        }
+
+        .quote-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 300%;
+            animation: gradient 3s ease infinite;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .quote-text {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .quote-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: #3498db;
+            position: absolute;
+            left: -1rem;
+            top: -1rem;
+            opacity: 0.3;
+        }
+
+        .quote-author {
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .action-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .action-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .action-section p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #ff5252, #26c6da);
+        }
+
+        .refresh-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .refresh-btn:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: rgba(255,255,255,1);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 70%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1.5rem;
+            }
+            
+            .quote-card {
+                padding: 2rem;
+                margin: 1rem 0;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Inspírate</h1>
+            <p>Transforma tu día con frases que motivan tu alma</p>
+        </header>
+
+        <div id="quote-container">
+            <!-- Las frases se cargarán aquí dinámicamente -->
+        </div>
+
+        <section class="action-section">
+            <h2>Tu Mejor Versión Te Espera</h2>
+            <p>Cada día es una nueva oportunidad para crecer, aprender y convertirte en quien realmente quieres ser. No esperes el momento perfecto, créalo.</p>
+            <a href="#" class="cta-button" onclick="generateNewQuotes()">Obtener Nueva Inspiración</a>
+        </section>
+    </div>
+
+    <button class="refresh-btn" onclick="generateNewQuotes()" title="Nueva inspiración">
+        🔄
+    </button>
+
+    <script>
+        const motivationalQuotes = [
+            {
+                text: "El éxito no es final, el fracaso no es fatal: lo que cuenta es el coraje de continuar.",
+                author: "Winston Churchill"
+            },
+            {
+                text: "Tu única limitación eres tú mismo. Rompe las barreras mentales y alcanza lo imposible.",
+                author: "Anónimo"
+            },
+            {
+                text: "No esperes por el momento perfecto. Toma el momento y hazlo perfecto.",
+                author: "Zoey Sayward"
+            },
+            {
+                text: "El futuro pertenece a aquellos que creen en la belleza de sus sueños.",
+                author: "Eleanor Roosevelt"
+            },
+            {
+                text: "No se trata de ser perfecto, se trata de ser mejor que ayer.",
+                author: "Anónimo"
+            },
+            {
+                text: "La diferencia entre lo ordinario y lo extraordinario es ese pequeño extra.",
+                author: "Jimmy Johnson"
+            },
+            {
+                text: "Tu potencial es infinito. No dejes que nadie, ni siquiera tú, te convenza de lo contrario.",
+                author: "Anónimo"
+            },
+            {
+                text: "El primer paso hacia el logro es decidir que no vas a permanecer donde estás.",
+                author: "J.P. Morgan"
+            },
+            {
+                text: "Cree en ti mismo y estarás a medio camino.",
+                author: "Theodore Roosevelt"
+            },
+            {
+                text: "Los desafíos son lo que hacen la vida interesante; superarlos es lo que le da significado.",
+                author: "Joshua J. Marine"
+            },
+            {
+                text: "No mires el reloj; haz lo que hace él: sigue adelante.",
+                author: "Sam Levenson"
+            },
+            {
+                text: "La motivación te pone en marcha, pero el hábito es lo que te mantiene en movimiento.",
+                author: "Jim Ryan"
+            }
+        ];
+
+        function getRandomQuotes(num = 3) {
+            const shuffled = [...motivationalQuotes].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, num);
+        }
+
+        function createQuoteCard(quote, index) {
+            return `
+                <div class="quote-card" style="animation-delay: ${index * 0.2}s">
+                    <div class="quote-text">${quote.text}</div>
+                    <div class="quote-author">— ${quote.author}</div>
+                </div>
+            `;
+        }
+
+        function generateNewQuotes() {
+            const container = document.getElementById('quote-container');
+            const quotes = getRandomQuotes(3);
+            
+            // Efecto de desvanecimiento
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.innerHTML = quotes.map((quote, index) => 
+                    createQuoteCard(quote, index)
+                ).join('');
+                
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // Cargar frases iniciales
+        document.addEventListener('DOMContentLoaded', function() {
+            generateNewQuotes();
+        });
+
+        // Cambiar frases automáticamente cada 15 segundos
+        setInterval(generateNewQuotes, 15000);
+    </script>
+</body>
+</html>
